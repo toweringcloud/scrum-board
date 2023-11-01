@@ -43,7 +43,7 @@ const Button = styled.button<ButtonProps>`
 	color: black;
 	cursor: pointer;
 	&:hover {
-		font-size: 1.1rem;
+		font-size: ${(props) => (props.bgColor ? "1.0rem" : "0.9rem")};
 		color: ${(props) => (props.bgColor ? "yellow" : "white")};
 	}
 `;

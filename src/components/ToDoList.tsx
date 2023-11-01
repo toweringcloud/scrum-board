@@ -87,6 +87,15 @@ const Category = styled.span`
 	font-weight: 600;
 	margin-bottom: 10px;
 `;
+const NoData = styled.div`
+	width: 30vw;
+	height: 7vh;
+	border: 1px dotted white;
+	border-radius: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
 
 function ToDoList() {
 	const toDosGroup = useRecoilValue(toDoSelectors);
@@ -108,7 +117,7 @@ function ToDoList() {
 	return (
 		<Wrapper>
 			<Header>
-				<Title>To Do List</Title>
+				<Title>Scrum Board</Title>
 				<Action>
 					<form onSubmit={handleSubmit(handleValid)}>
 						<Label htmlFor="category">Category </Label>
@@ -142,6 +151,9 @@ function ToDoList() {
 				{Object.keys(toDosGroup).map((key) => (
 					<Group>
 						<Category>{key}</Category>
+						{toDosGroup[key].length === 0 && (
+							<NoData>No Content</NoData>
+						)}
 						{toDosGroup[key]?.map((toDo: any) => (
 							<ToDo key={toDo.id} {...toDo} />
 						))}
