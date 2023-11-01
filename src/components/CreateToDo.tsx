@@ -34,7 +34,7 @@ const Button = styled.button`
 		color: white;
 	}
 `;
-const Warning = styled.div`
+const Warning = styled.span`
 	font-size: 12px;
 	color: orange;
 `;

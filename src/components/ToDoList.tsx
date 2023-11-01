@@ -96,7 +96,7 @@ const NoData = styled.div`
 	justify-content: center;
 	align-items: center;
 `;
-const Warning = styled.div`
+const Warning = styled.span`
 	font-size: 12px;
 	color: orange;
 `;
@@ -172,9 +172,12 @@ function ToDoList() {
 								},
 							})}
 							placeholder="Write a category"
+							disabled={customCats.length >= 3}
 						/>
-						{customCats.length < 3 && <Button>NEW</Button>}
-						{customCats.length === 3 && <span>Max 3</span>}
+						{customCats.length < 3 && (
+							<Button name="newCat">NEW</Button>
+						)}
+						{customCats.length >= 3 && <Warning>Max 3</Warning>}
 					</form>
 					<hr />
 					<CreateToDo />
