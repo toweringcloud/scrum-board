@@ -157,7 +157,10 @@ function ToDoList() {
 							<option value={Categories.DOING}>DOING</option>
 							<option value={Categories.DONE}>DONE!</option>
 							{customCats.map((customCat) => (
-								<option value={customCat.text}>
+								<option
+									key={customCat.id}
+									value={customCat.text}
+								>
 									{customCat.text}
 								</option>
 							))}
@@ -186,7 +189,7 @@ function ToDoList() {
 			</Header>
 			<Content>
 				{Object.keys(toDosGroup).map((key) => (
-					<Group>
+					<Group key={key}>
 						<Category>
 							{key}
 							{toDosGroup[key].length === 0 &&

@@ -46,7 +46,7 @@ const Button = styled.button<ButtonProps>`
 	color: black;
 	cursor: pointer;
 	&:hover {
-		font-size: ${(props) => (props.bgColor ? "1.0rem" : "0.9rem")};
+		font-size: ${(props) => (props.bgColor ? "12px" : "10px")};
 		color: ${(props) => (props.bgColor ? "yellow" : "white")};
 	}
 `;
@@ -113,7 +113,11 @@ function ToDo({ text, category, id }: IToDo) {
 				{customCats.map((customCat) => {
 					if (category !== customCat.text) {
 						return (
-							<Button name={customCat.text} onClick={handleAdd}>
+							<Button
+								key={customCat.id}
+								name={customCat.text}
+								onClick={handleAdd}
+							>
 								{customCat.text}
 							</Button>
 						);
