@@ -5,7 +5,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Categories, catsState, IToDo, toDosState } from "../atoms";
 
 interface ButtonProps {
-	bgColor?: string;
+	bgcolor?: string;
 	borderColor?: string;
 	text?: string;
 }
@@ -42,12 +42,12 @@ const Button = styled.button<ButtonProps>`
 	font-weight: 600;
 	border-radius: 6px;
 	background-color: ${(props) =>
-		props.bgColor ? props.bgColor : props.theme.accentColor};
+		props.bgcolor ? props.bgcolor : props.theme.accentColor};
 	color: black;
 	cursor: pointer;
 	&:hover {
-		font-size: ${(props) => (props.bgColor ? "12px" : "10px")};
-		color: ${(props) => (props.bgColor ? "yellow" : "white")};
+		font-size: ${(props) => (props.bgcolor ? "12px" : "10px")};
+		color: ${(props) => (props.bgcolor ? "yellow" : "white")};
 	}
 `;
 
@@ -123,7 +123,7 @@ function ToDo({ text, category, id }: IToDo) {
 						);
 					}
 				})}
-				<Button bgColor="tomato" onClick={handleRemove}>
+				<Button bgcolor="tomato" onClick={handleRemove}>
 					DEL
 				</Button>
 			</Action>
