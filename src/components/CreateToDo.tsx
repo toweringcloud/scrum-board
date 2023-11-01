@@ -34,11 +34,15 @@ const Button = styled.button`
 		color: white;
 	}
 `;
+const Warning = styled.div`
+	font-size: 12px;
+	color: orange;
+`;
 
 function CreateToDo() {
 	const setToDos = useSetRecoilState(toDosState);
 	const category = useRecoilValue(catState);
-	const { register, handleSubmit, setValue } = useForm<IForm>();
+	const { register, handleSubmit, setValue, formState } = useForm<IForm>();
 
 	const handleValid = ({ toDo }: IForm) => {
 		setToDos((oldToDos) => [
@@ -55,12 +59,21 @@ function CreateToDo() {
 					<Input
 						{...register("toDo", {
 							required: "Please write a To Do",
+							minLength: {
+								value: 2,
+								message: "Your task is too short (min 2)!",
+							},
+							maxLength: {
+								value: 20,
+								message: "Your task is too long (max 20)!",
+							},
 						})}
-						placeholder="Write a to do"
+						placeholder="Write a task to do"
 					/>
 					<Button>ADD</Button>
 				</Create>
 			</form>
+			<Warning>{formState.errors?.toDo?.message}</Warning>
 		</>
 	);
 }

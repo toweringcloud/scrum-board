@@ -14,6 +14,7 @@ const Wrapper = styled.div`
 	width: 30vw;
 	border: 1px solid white;
 	border-radius: 15px;
+	background-color: #434444;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -34,10 +35,12 @@ const Action = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	gap: 5px;
+	gap: 2px;
 `;
 const Button = styled.button<ButtonProps>`
-	border-radius: 8px;
+	font-size: 10px;
+	font-weight: 600;
+	border-radius: 6px;
 	background-color: ${(props) =>
 		props.bgColor ? props.bgColor : props.theme.accentColor};
 	color: black;
@@ -67,10 +70,8 @@ function ToDo({ text, category, id }: IToDo) {
 	};
 
 	// remove old todo
-	const handleRem = () => {
-		setToDos((oldToDos) =>
-			oldToDos.filter((toDo) => toDo.id !== Number(id))
-		);
+	const handleRemove = () => {
+		setToDos((oldToDos) => oldToDos.filter((toDo) => toDo.id !== id));
 	};
 
 	return (
@@ -96,17 +97,17 @@ function ToDo({ text, category, id }: IToDo) {
 			<Action>
 				{category !== Categories.DOING && (
 					<Button name={Categories.DOING} onClick={handleAdd}>
-						Doing
+						DOING
 					</Button>
 				)}
 				{category !== Categories.TO_DO && (
 					<Button name={Categories.TO_DO} onClick={handleAdd}>
-						To Do
+						TO DO
 					</Button>
 				)}
 				{category !== Categories.DONE && (
 					<Button name={Categories.DONE} onClick={handleAdd}>
-						Done!
+						DONE!
 					</Button>
 				)}
 				{customCats.map((customCat) => {
@@ -118,7 +119,7 @@ function ToDo({ text, category, id }: IToDo) {
 						);
 					}
 				})}
-				<Button bgColor="tomato" onClick={handleRem}>
+				<Button bgColor="tomato" onClick={handleRemove}>
 					DEL
 				</Button>
 			</Action>
