@@ -89,14 +89,13 @@ const Category = styled.span`
 `;
 
 function ToDoList() {
-	// const toDos = useRecoilValue(toDoSelector);
 	const toDosGroup = useRecoilValue(toDoSelectors);
-	const [categories, setCategories] = useRecoilState(catsState);
+	const [customCats, setCustomCats] = useRecoilState(catsState);
 	const [category, setCategory] = useRecoilState(catState);
 	const { register, handleSubmit, setValue } = useForm<IForm>();
 
 	const handleValid = ({ category }: IForm) => {
-		setCategories((oldCats) => [
+		setCustomCats((oldCats) => [
 			{ text: category, id: Date.now() },
 			...oldCats,
 		]);
@@ -121,9 +120,9 @@ function ToDoList() {
 							<option value={Categories.TO_DO}>TO_DO</option>
 							<option value={Categories.DOING}>DOING</option>
 							<option value={Categories.DONE}>DONE!</option>
-							{categories.map((category) => (
-								<option value={category.text}>
-									{category.text}
+							{customCats.map((customCat) => (
+								<option value={customCat.text}>
+									{customCat.text}
 								</option>
 							))}
 						</Select>

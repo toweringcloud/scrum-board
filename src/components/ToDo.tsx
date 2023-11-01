@@ -1,8 +1,8 @@
 import React from "react";
+import styled from "styled-components";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import { Categories, catsState, IToDo, toDosState } from "../atoms";
-import styled from "styled-components";
 
 interface ButtonProps {
 	bgColor?: string;
@@ -50,7 +50,7 @@ const Button = styled.button<ButtonProps>`
 
 function ToDo({ text, category, id }: IToDo) {
 	const setToDos = useSetRecoilState(toDosState);
-	const [categories] = useRecoilValue(catsState);
+	const customCats = useRecoilValue(catsState);
 
 	// add new todo
 	const handleAdd = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -109,9 +109,15 @@ function ToDo({ text, category, id }: IToDo) {
 						Done!
 					</Button>
 				)}
-				{/* {categories.map((category) => (
-					<option value={category.text}>{category.text}</option>
-				))} */}
+				{customCats.map((customCat) => {
+					if (category !== customCat.text) {
+						return (
+							<Button name={customCat.text} onClick={handleAdd}>
+								{customCat.text}
+							</Button>
+						);
+					}
+				})}
 				<Button bgColor="tomato" onClick={handleRem}>
 					DEL
 				</Button>

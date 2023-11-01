@@ -43,14 +43,6 @@ export const toDosState = atom<IToDo[]>({
 	effects_UNSTABLE: [persistAtom],
 });
 
-// export const toDoSelector = selector({
-// 	key: "toDoSelector",
-// 	get: ({ get }) => {
-// 		const toDos = get(toDosState);
-// 		const category = get(categoryState);
-// 		return toDos.filter((toDo) => toDo.category === category);
-// 	},
-// });
 export const toDoSelectors = selector({
 	key: "toDoSelectors",
 	get: ({ get }) => {
