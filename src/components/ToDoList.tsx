@@ -11,6 +11,8 @@ interface IForm {
 	category: string;
 }
 
+const DefaultCategories = ["TO_DO", "DOING", "DONE"];
+
 const Wrapper = styled.div`
 	display: grid;
 	grid-template-columns: 1fr;
@@ -89,9 +91,11 @@ const Category = styled.span`
 `;
 const NoData = styled.div`
 	width: 30vw;
-	height: 6vh;
+	height: 7.5vh;
 	border: 1px dotted white;
 	border-radius: 15px;
+	background-color: lightgray;
+	color: black;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -116,14 +120,29 @@ function ToDoList() {
 	const toDosGroup = useRecoilValue(toDoSelectors);
 	const [customCats, setCustomCats] = useRecoilState(catsState);
 	const [category, setCategory] = useRecoilState(catState);
-	const { register, handleSubmit, setValue, formState } = useForm<IForm>();
+	const { formState, handleSubmit, register, setError, setValue } =
+		useForm<IForm>();
 
 	// add new category
 	const handleAdd = ({ category }: IForm) => {
-		setCustomCats((oldCats) => [
-			{ text: category.trim().toUpperCase(), id: Date.now() },
-			...oldCats,
-		]);
+		const customCategory = category.toUpperCase();
+		const prevCategories = [
+			...DefaultCategories,
+			...customCats.map((i) => i.text),
+		];
+		if (prevCategories.find((i) => i === customCategory) !== undefined) {
+			setError(
+				"category",
+				{ message: `Same category (${customCategory}) already exits!` },
+				{ shouldFocus: true }
+			);
+		} else {
+			setCustomCats((oldCats) => [
+				{ text: customCategory, id: Date.now() },
+				...oldCats,
+			]);
+			setCategory(customCategory as any);
+		}
 		setValue("category", "");
 	};
 
@@ -153,9 +172,9 @@ function ToDoList() {
 							value={category}
 							onInput={handleInput}
 						>
-							<option value={Categories.TO_DO}>TO DO</option>
+							<option value={Categories.TO_DO}>TO_DO</option>
 							<option value={Categories.DOING}>DOING</option>
-							<option value={Categories.DONE}>DONE!</option>
+							<option value={Categories.DONE}>DONE</option>
 							{customCats.map((customCat) => (
 								<option
 									key={customCat.id}
@@ -169,9 +188,9 @@ function ToDoList() {
 							{...register("category", {
 								required: "Please write a category",
 								pattern: {
-									value: /^[A-Za-z0-9_-]{2,5}$/,
+									value: /^[A-Za-z0-9_-]{2,6}$/,
 									message:
-										"Only alphanumeric with 2~5 characters allowed!",
+										"Alphanumeric | underbar(_) | dash(-) with 2~6 characters allowed!",
 								},
 							})}
 							placeholder="Write a category"
@@ -182,10 +201,10 @@ function ToDoList() {
 						)}
 						{customCats.length >= 3 && <Warning>Max 3</Warning>}
 					</form>
+					<Warning>{formState.errors?.category?.message}</Warning>
 					<hr />
 					<CreateToDo />
 				</Action>
-				<Warning>{formState.errors?.category?.message}</Warning>
 			</Header>
 			<Content>
 				{Object.keys(toDosGroup).map((key) => (
@@ -193,9 +212,8 @@ function ToDoList() {
 						<Category>
 							{key}
 							{toDosGroup[key].length === 0 &&
-								["TO_DO", "DOING", "DONE"].find(
-									(i) => i === key
-								) === undefined && (
+								DefaultCategories.find((i) => i === key) ===
+									undefined && (
 									<Delete id={key} onClick={handleRemove}>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"

@@ -53,14 +53,12 @@ export const toDoSelectors = selector({
 				(toDo) => toDo.category === category
 			);
 		}
-		console.log("toDosGroup1: ", toDosGroup);
-
 		get(catsState).map((category: ICategory) => {
 			toDosGroup[category.text] = toDos.filter(
 				(toDo) => toDo.category === category.text
 			);
 		});
-		console.log("toDosGroup2: ", toDosGroup);
+		console.log("toDosGroup: ", toDosGroup);
 		return toDosGroup;
 	},
 });
