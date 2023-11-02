@@ -1,6 +1,6 @@
 # scrum-board
 
-## typescript react recoil task manager
+## task manager using recoil & react-hook-form
 
 -   create new task per category
 -   read task list per category
