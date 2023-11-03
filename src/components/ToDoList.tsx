@@ -8,10 +8,8 @@ import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 
 interface IForm {
-	category: string;
+	categoryName: string;
 }
-
-const DefaultCategories = ["TO_DO", "DOING", "DONE"];
 
 const Wrapper = styled.div`
 	display: grid;
@@ -123,16 +121,16 @@ function ToDoList() {
 	const { formState, handleSubmit, register, setError, setValue } =
 		useForm<IForm>();
 
-	// add new category
-	const handleAdd = ({ category }: IForm) => {
-		const customCategory = category.toUpperCase();
+	// create new category
+	const handleAdd = ({ categoryName }: IForm) => {
+		const customCategory = categoryName.toUpperCase();
 		const prevCategories = [
-			...DefaultCategories,
+			...Object.keys(Categories),
 			...customCats.map((i) => i.text),
 		];
 		if (prevCategories.find((i) => i === customCategory) !== undefined) {
 			setError(
-				"category",
+				"categoryName",
 				{ message: `Same category (${customCategory}) already exits!` },
 				{ shouldFocus: true }
 			);
@@ -143,21 +141,22 @@ function ToDoList() {
 			]);
 			setCategory(customCategory as any);
 		}
-		setValue("category", "");
+		setValue("categoryName", "");
 	};
 
-	// remove empty category
+	// update changed category
+	const handleModify = (event: React.FormEvent<HTMLSelectElement>) => {
+		setCategory(event.currentTarget.value as any);
+	};
+
+	// delete empty category
 	const handleRemove = (event: React.MouseEvent<HTMLSpanElement>) => {
 		setCustomCats((oldCats) =>
 			oldCats.filter(
 				(category) => category.text !== event.currentTarget.id
 			)
 		);
-	};
-
-	// update selected category
-	const handleInput = (event: React.FormEvent<HTMLSelectElement>) => {
-		setCategory(event.currentTarget.value as any);
+		setCategory(Object.keys(Categories)[0] as any);
 	};
 
 	return (
@@ -170,7 +169,7 @@ function ToDoList() {
 						<Select
 							id="category"
 							value={category}
-							onInput={handleInput}
+							onInput={handleModify}
 						>
 							<option value={Categories.TO_DO}>TO_DO</option>
 							<option value={Categories.DOING}>DOING</option>
@@ -185,7 +184,7 @@ function ToDoList() {
 							))}
 						</Select>
 						<Input
-							{...register("category", {
+							{...register("categoryName", {
 								required: "Please write a category",
 								pattern: {
 									value: /^[A-Za-z0-9_-]{2,6}$/,
@@ -201,7 +200,7 @@ function ToDoList() {
 						)}
 						{customCats.length >= 3 && <Warning>Max 3</Warning>}
 					</form>
-					<Warning>{formState.errors?.category?.message}</Warning>
+					<Warning>{formState.errors?.categoryName?.message}</Warning>
 					<hr />
 					<CreateToDo />
 				</Action>
@@ -212,8 +211,9 @@ function ToDoList() {
 						<Category>
 							{key}
 							{toDosGroup[key].length === 0 &&
-								DefaultCategories.find((i) => i === key) ===
-									undefined && (
+								Object.keys(Categories).find(
+									(i) => i === key
+								) === undefined && (
 									<Delete id={key} onClick={handleRemove}>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"

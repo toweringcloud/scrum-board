@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
-import { catState, toDosState } from "../atoms";
+import { Categories, catState, toDosState } from "../atoms";
 
 interface IForm {
 	toDo: string;
@@ -41,10 +41,11 @@ const Warning = styled.span`
 
 function CreateToDo() {
 	const setToDos = useSetRecoilState(toDosState);
-	const category = useRecoilValue(catState);
+	const [category, setCategory] = useRecoilState(catState);
 	const { register, handleSubmit, setValue, formState } = useForm<IForm>();
 
 	const handleValid = ({ toDo }: IForm) => {
+		if (!category) setCategory(Object.keys(Categories)[0] as any);
 		setToDos((oldToDos) => [
 			{ text: toDo, id: Date.now(), category },
 			...oldToDos,
