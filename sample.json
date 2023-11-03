@@ -1,0 +1,44 @@
+{
+	"todos": [
+		{
+			"text": "dart flutter challenge",
+			"id": 1698986942070,
+			"category": "HOLD"
+		},
+		{
+			"text": "react masterclass",
+			"id": 1698986901061,
+			"category": "DOING"
+		},
+		{
+			"text": "vanillajs beginner challenge",
+			"id": 1698986764521,
+			"category": "DONE"
+		},
+		{
+			"text": "typescript beginner challenge",
+			"id": 1698986755592,
+			"category": "DONE"
+		},
+		{
+			"text": "python beginner challenge",
+			"id": 1698986748197,
+			"category": "DONE"
+		},
+		{
+			"text": "react-native masterclass",
+			"id": 1698986223304,
+			"category": "TO_DO"
+		},
+		{
+			"text": "css layout masterclass",
+			"id": 1698986216466,
+			"category": "DOING"
+		}
+	],
+	"categories": [
+		{ "text": "HOLD", "id": 1698986929959 },
+		{ "text": "ETC", "id": 1698986817662 }
+	],
+	"category": "ETC"
+}
