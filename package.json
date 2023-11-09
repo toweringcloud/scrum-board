@@ -4,7 +4,7 @@
 	"description": "task manager using recoil & react hook form",
 	"license": "MIT",
 	"author": "toweringcloud",
-	"homepage": "https://github.com/toweringcloud/scrum-board",
+	"homepage": "https://toweringcloud.github.io/scrum-board",
 	"inspiredby": "https://nomadcoders.co/react-masterclass",
 	"keywords": [
 		"react",
