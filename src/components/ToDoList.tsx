@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { useRecoilState, useRecoilValue } from "recoil";
 
@@ -161,6 +162,10 @@ function ToDoList() {
 
 	return (
 		<Wrapper>
+			<Helmet>
+				<meta charSet="utf-8" />
+				<title>Scrum Board</title>
+			</Helmet>
 			<Header>
 				<Title>Scrum Board</Title>
 				<Action>
