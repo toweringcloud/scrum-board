@@ -18,25 +18,26 @@ const Create = styled.div`
 const Input = styled.input`
 	width: 300px;
 	height: 30px;
-	border-radius: 10px;
-	background-color: white;
+	border-radius: 5px;
+	background-color: ${(props) => props.theme.bgColor};
 `;
 const Button = styled.button`
 	width: 50px;
 	height: 30px;
+	border: 1px solid transparent;
 	border-radius: 10px;
 	background-color: ${(props) => props.theme.accentColor};
-	color: black;
+	color: ${(props) => props.theme.textColor};
 	font-size: 15px;
 	font-weight: 600;
 	cursor: pointer;
 	&:hover {
-		color: white;
+		background-color: ${(props) => props.theme.contentColor};
 	}
 `;
 const Warning = styled.span`
 	font-size: 12px;
-	color: orange;
+	color: ${(props) => props.theme.contentColor};
 `;
 
 function CreateToDo() {
@@ -59,7 +60,7 @@ function CreateToDo() {
 				<Create>
 					<Input
 						{...register("toDo", {
-							required: "Please write a To Do",
+							required: "Please, write a task to do!",
 							minLength: {
 								value: 3,
 								message: "Your task is too short (min 3)!",
@@ -69,7 +70,7 @@ function CreateToDo() {
 								message: "Your task is too long (max 30)!",
 							},
 						})}
-						placeholder="Write a task to do"
+						placeholder="Write a task to do."
 					/>
 					<Button>ADD</Button>
 				</Create>

@@ -7,6 +7,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { Categories, catState, catsState, toDoSelectors } from "../atoms";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
+// import * as SAMPLE from "./sample.json";
 
 interface IForm {
 	categoryName: string;
@@ -33,7 +34,9 @@ const Title = styled.span`
 	margin: 20px;
 `;
 const Action = styled.div`
-	border: 1px solid white;
+	color: ${(props) => props.theme.textColor};
+	background-color: ${(props) => props.theme.cardBgColor};
+	/* border: 1px solid ${(props) => props.theme.textColor}; */
 	border-radius: 10px;
 	padding: 10px;
 `;
@@ -51,23 +54,32 @@ const Select = styled.select`
 const Input = styled.input`
 	width: 130px;
 	height: 30px;
-	border-radius: 10px;
+	border-radius: 5px;
 	margin-left: 5px;
 	margin-right: 5px;
+	background-color: ${(props) => props.theme.bgColor};
 `;
 const Button = styled.button`
 	width: 50px;
 	height: 30px;
+	border: 1px solid transparent;
 	border-radius: 10px;
 	background-color: ${(props) => props.theme.accentColor};
-	color: black;
+	color: ${(props) => props.theme.textColor};
 	font-size: 15px;
 	font-weight: 600;
 	cursor: pointer;
 	&:hover {
-		color: white;
+		background-color: ${(props) => props.theme.contentColor};
 	}
 `;
+// const Sample = styled.span`
+// 	font-size: 10px;
+// 	color: ${(props) => props.theme.accentColor};
+// 	&:hover {
+// 		background-color: ${(props) => props.theme.contentColor};
+// 	}
+// `;
 const Content = styled.div`
 	padding: 30px;
 	display: grid;
@@ -91,27 +103,27 @@ const Category = styled.span`
 const NoData = styled.div`
 	width: 30vw;
 	height: 6vh;
-	border: 1px dotted white;
+	border: 1px dotted transparent;
 	border-radius: 15px;
-	background-color: lightgray;
-	color: black;
+	background-color: ${(props) => props.theme.accentColor};
+	color: ${(props) => props.theme.textColor};
 	display: flex;
 	justify-content: center;
 	align-items: center;
 `;
 const Warning = styled.span`
 	font-size: 12px;
-	color: orange;
+	color: ${(props) => props.theme.contentColor};
 `;
 const Delete = styled.span`
 	margin-left: 5px;
 	cursor: pointer;
-	&:hover {
-		color: white;
-	}
 	svg {
 		width: 20px;
 		fill: tomato;
+		&:hover {
+			color: ${(props) => props.theme.contentColor};
+		}
 	}
 `;
 
@@ -160,6 +172,11 @@ function ToDoList() {
 		setCategory(Object.keys(Categories)[0] as any);
 	};
 
+	// load sample into local storage
+	// const loadSample = () => {
+	// 	setCustomSamples(SAMPLE);
+	// };
+
 	return (
 		<Wrapper>
 			<Helmet>
@@ -190,14 +207,14 @@ function ToDoList() {
 						</Select>
 						<Input
 							{...register("categoryName", {
-								required: "Please write a category",
+								required: "Please, write a category!",
 								pattern: {
 									value: /^[A-Za-z0-9_-]{2,6}$/,
 									message:
 										"Alphanumeric | underbar(_) | dash(-) with 2~6 characters allowed!",
 								},
 							})}
-							placeholder="Write a category"
+							placeholder="Write a category."
 							disabled={customCats.length >= 3}
 						/>
 						{customCats.length < 3 && (
@@ -209,6 +226,7 @@ function ToDoList() {
 					<hr />
 					<CreateToDo />
 				</Action>
+				{/* <Sample onClick={loadSample}>Click to load sample data!</Sample> */}
 			</Header>
 			<Content>
 				{Object.keys(toDosGroup).map((key) => (

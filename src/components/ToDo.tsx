@@ -4,17 +4,11 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import { Categories, catsState, IToDo, toDosState } from "../atoms";
 
-interface ButtonProps {
-	bgcolor?: string;
-	borderColor?: string;
-	text?: string;
-}
-
 const Wrapper = styled.div`
 	width: 30vw;
-	border: 1px solid white;
+	/* border: 1px solid ${(props) => props.theme.textColor}; */
 	border-radius: 15px;
-	background-color: darkgreen;
+	background-color: ${(props) => props.theme.cardBgColor};
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -23,10 +17,11 @@ const Wrapper = styled.div`
 	gap: 5px;
 `;
 const Task = styled.span`
+	color: ${(props) => props.theme.contentColor};
 	white-space: nowrap;
 	svg {
 		width: 20px;
-		fill: green;
+		fill: ${(props) => props.theme.cardBgColor};
 	}
 `;
 const Action = styled.div`
@@ -37,28 +32,26 @@ const Action = styled.div`
 	align-items: center;
 	gap: 2px;
 `;
-const Button = styled.button<ButtonProps>`
+const Button = styled.button`
 	font-size: 10px;
 	font-weight: 600;
-	border-radius: 6px;
-	background-color: ${(props) =>
-		props.bgcolor ? props.bgcolor : "lightgreen"};
-	color: black;
+	border: none;
+	border-radius: 5px;
+	background-color: ${(props) => props.theme.accentColor};
+	color: ${(props) => props.theme.textColor};
 	cursor: pointer;
 	&:hover {
-		font-size: ${(props) => (props.bgcolor ? "12px" : "10px")};
-		color: ${(props) => (props.bgcolor ? "tomato" : "darkgreen")};
-		background-color: white;
+		background-color: ${(props) => props.theme.contentColor};
 	}
 `;
 const Delete = styled.span`
 	cursor: pointer;
-	&:hover {
-		color: white;
-	}
 	svg {
 		width: 15px;
 		fill: tomato;
+		&:hover {
+			color: ${(props) => props.theme.contentColor};
+		}
 	}
 `;
 
