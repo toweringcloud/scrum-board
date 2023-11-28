@@ -62,8 +62,8 @@ function CreateToDo() {
 						{...register("toDo", {
 							required: "Please, write a task to do!",
 							minLength: {
-								value: 3,
-								message: "Your task is too short (min 3)!",
+								value: 2,
+								message: "Your task is too short (min 2)!",
 							},
 							maxLength: {
 								value: 30,
